@@ -12,6 +12,17 @@ class RoomSerializer(serializers.ModelSerializer):
         exclude = ("modified",)
 
 
+class RoomCreateSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Room
+        fields = "__all__"
+
+    def create(serlf, validated_data):
+        return Room.objects.create(**validated_data)
+
+
 class RoomDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Room
