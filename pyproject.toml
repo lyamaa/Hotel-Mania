@@ -6,6 +6,13 @@ authors = ["surajmt8848 <you@example.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+Django = "^3.2.3"
+black = "^21.5b1"
+flake8 = "^3.9.2"
+Pillow = "^8.2.0"
+django-seed = "^0.2.2"
+isort = "^5.8.0"
+djangorestframework = "^3.12.4"
 
 [tool.poetry.dev-dependencies]
 
