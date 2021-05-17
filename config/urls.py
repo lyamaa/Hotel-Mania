@@ -6,7 +6,9 @@ from django.urls.conf import include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/v1/rooms/', include('rooms.urls'))
+    path("api/v1/rooms/", include("rooms.urls")),
+    path("api/v1/commons/", include("commons.urls")),
+    path("api/v1/hotels/", include("hotels.urls", namespace="hotel")),
 ]
 
 if settings.DEBUG:
