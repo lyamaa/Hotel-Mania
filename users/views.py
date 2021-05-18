@@ -1,5 +1,6 @@
-from functools import partial
-
+import jwt
+from django.conf import settings
+from django.contrib.auth import authenticate
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
@@ -23,6 +24,22 @@ class UsersView(APIView):
             return Response(user_serializer.data)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+def login(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+
+    if not username or not password:
+        return Response({"error": "username and password cannot be wmpty"}, status=status.HTTP_400_BAD_REQUEST)
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        encoded_jwt = jwt.encode({"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256")
+        return Response(data={"token": encoded_jwt})
+
+    else:
+        return Response({"error": "invalid Credentials provided"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class MeView(APIView):
