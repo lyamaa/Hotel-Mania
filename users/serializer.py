@@ -2,21 +2,20 @@ from rest_framework import fields, serializers
 
 from .models import User
 
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        exclude = (
-            "groups",
-            "user_permissions",
-            "password",
-            "last_login",
-            "is_active",
-            "is_superuser",
-            "is_staff",
-            "date_joined",
-            "favs",
-        )
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = User
+#         exclude = (
+#             "groups",
+#             "user_permissions",
+#             "password",
+#             "last_login",
+#             "is_active",
+#             "is_superuser",
+#             "is_staff",
+#             "date_joined",
+#             "favs",
+#         )
 
 
 class ReadUserSerializer(serializers.ModelSerializer):
@@ -34,7 +33,7 @@ class ReadUserSerializer(serializers.ModelSerializer):
         )
 
 
-class WriteUserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
 
