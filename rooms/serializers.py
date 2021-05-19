@@ -5,11 +5,25 @@ from .models import Room
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    user = UserSerializer(many=False, read_only=True)
+    is_fav = serializers.SerializerMethodField()
 
     class Meta:
         model = Room
         exclude = ("modified",)
+
+    def get_is_fav(self, obj):
+        request = self.context.get("request")
+        if request:
+            user = request.user
+            if user.is_authenticated:
+                return obj in user.favs.all()
+        return False
+
+    def create(self, validated_data):
+        request = self.context.get("request")
+        room = Room.objects.create(**validated_data, user=request.user)
+        return room
 
 
 class RoomCreateSerializer(serializers.ModelSerializer):
@@ -22,22 +36,22 @@ class RoomCreateSerializer(serializers.ModelSerializer):
     def create(serlf, validated_data):
         return Room.objects.create(**validated_data)
 
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get("name", instance.name)
-        instance.address = validated_data.get("address", instance.address)
-        instance.price = validated_data.get("price", instance.price)
-        instance.beds = validated_data.get("beds", instance.price)
-        instance.lat = validated_data.get("lat", instance.lat)
-        instance.lng = validated_data.get("lng", instance.lng)
-        instance.bedrooms = validated_data.get("bedrooms", instance.bedrooms)
-        instance.bathrooms = validated_data.get("bathrooms", instance.bathrooms)
-        instance.check_in = validated_data.get("check_in", instance.check_in)
-        instance.check_out = validated_data.get("check_out", instance.check_out)
-        instance.instant_book = validated_data.get("instant_book", instance.instant_book)
-        instance.user = validated_data.get("user", instance.user)
+    # def update(self, instance, validated_data):
+    #     instance.name = validated_data.get("name", instance.name)
+    #     instance.address = validated_data.get("address", instance.address)
+    #     instance.price = validated_data.get("price", instance.price)
+    #     instance.beds = validated_data.get("beds", instance.price)
+    #     instance.lat = validated_data.get("lat", instance.lat)
+    #     instance.lng = validated_data.get("lng", instance.lng)
+    #     instance.bedrooms = validated_data.get("bedrooms", instance.bedrooms)
+    #     instance.bathrooms = validated_data.get("bathrooms", instance.bathrooms)
+    #     instance.check_in = validated_data.get("check_in", instance.check_in)
+    #     instance.check_out = validated_data.get("check_out", instance.check_out)
+    #     instance.instant_book = validated_data.get("instant_book", instance.instant_book)
+    #     instance.user = validated_data.get("user", instance.user)
 
-        instance.save()
-        return instance
+    #     instance.save()
+    #     return instance
 
 
 class RoomDetailSerializer(serializers.ModelSerializer):
