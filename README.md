@@ -1,3 +1,3 @@
 # Hotel-Mania API
 
-REST API of the Hotel App using Django REST Framework and Graphene GraphQL
+REST API of the Hotel App using Django REST Framework
