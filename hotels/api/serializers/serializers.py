@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import fields
 from drf_writable_nested import WritableNestedModelSerializer
 from hotels.models import (
     Hotel,
@@ -47,4 +48,10 @@ class HotelSpecificationValueSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = HotelSpecificationValue
+        fields = "__all__"
+
+
+class HotelImage(serializers.ModelSerializer):
+    class Meta:
+        model = HotelImage
         fields = "__all__"

@@ -5,6 +5,6 @@ urlpatterns = [
     path("", include("hotels.api.urls.hotels", namespace="hotel")),
     path("", include("hotels.api.urls.hotel_types")),
     path("", include("hotels.api.urls.hotel_specification")),
-    path("", include("hotels.api.urls.hotel_specification")),
-    path("", include("hotels.api.urls.hotel_specification_value_serializer")),
+    path("", include("hotels.api.urls.hotel_specification_value")),
+    path("", include("hotels.api.urls.image_upload")),
 ]
