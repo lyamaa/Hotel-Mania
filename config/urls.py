@@ -10,9 +10,11 @@ urlpatterns = [
     path("api/v1/users/", include("users.urls")),
     path("api/v1/commons/", include("commons.urls")),
     # Hotels urls
-    path("api/v1/hotels/", include("hotels.api.urls.hotels", namespace="hotel")),
-    path("api/v1/", include("hotels.api.urls.hotel_types")),
-    path("api/v1/", include("hotels.api.urls.hotel_specification")),
+    path("api/v1/", include("hotels.api.urls.main")),
+    # path("api/v1/", include("hotels.api.urls.hotel_types")),
+    # path("api/v1/", include("hotels.api.urls.hotel_specification")),
+    # path("api/v1/", include("hotels.api.urls.hotel_specification")),
+    # path("api/v1/", include("hotels.api.urls.hotel_specification_value_serializer")),
 ]
 
 if settings.DEBUG:

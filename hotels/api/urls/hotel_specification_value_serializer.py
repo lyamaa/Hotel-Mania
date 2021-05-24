@@ -1,11 +1,11 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from ..views.views import HotelViewSets
+from ..views.views import HotelSpecificationViewSets
 
-app_name = "hotel"
 router = DefaultRouter()
-router.register("hotels/", HotelViewSets)
+
+router.register("hotel-specifications-value", HotelSpecificationViewSets)
 
 
 urlpatterns = router.urls
