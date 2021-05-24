@@ -22,8 +22,8 @@ class HotelTypeSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class HotelSpecificationSerilaizer(WritableNestedModelSerializer):
-    hotel_type = HotelTypeSerializer()
+class HotelSpecificationSerilaizer(serializers.ModelSerializer):
+    hotel_type = serializers.PrimaryKeyRelatedField(queryset=HotelType.objects.all())
 
     class Meta:
         model = HotelSpecifications
