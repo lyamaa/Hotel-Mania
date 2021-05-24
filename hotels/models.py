@@ -44,6 +44,7 @@ class Hotel(CoreModel):
     name = models.CharField(_("Hotel Name"), max_length=50)
     description = models.TextField(_("Hotel Descriptions"), default="")
     hotel_type = models.ForeignKey(HotelType, on_delete=models.CASCADE)
+    hotel_owner = models.ForeignKey(User, on_delete=models.CASCADE)
     slug = AutoSlugField(
         verbose_name=_("Hotel Slug"),
         populate_from="name",
