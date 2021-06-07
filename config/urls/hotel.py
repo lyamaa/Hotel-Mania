@@ -4,6 +4,7 @@ from hotels.api.views.views import (
     HotelViewSets,
     HotelSpecificationValuesViewSets,
     HotelTypeViewSets,
+    HotelSpecificationViewSets,
 )
 
 router = ExtendedDefaultRouter()
@@ -16,7 +17,12 @@ urlpatterns = []
 # ]
 
 
-router.register("hotels", HotelViewSets, basename="hotel")
+router.register("hotels/", HotelViewSets, basename="hotel")
+router.register(
+    "hotels/specs/",
+    HotelSpecificationViewSets,
+    basename="h-spec",
+)
 router.register(
     "hotels/specs/value",
     HotelSpecificationValuesViewSets,

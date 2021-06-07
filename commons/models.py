@@ -7,6 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
+from django.contrib.gis.db import models
 
 User = get_user_model()
 
@@ -19,7 +20,10 @@ class ConfigChoiceCategory(MPTTModel):
     """ """
 
     name = models.CharField(
-        _("Config Choice Category Name"), help_text=_("Required and Unique"), max_length=255, unique=True
+        _("Config Choice Category Name"),
+        help_text=_("Required and Unique"),
+        max_length=255,
+        unique=True,
     )
     slug = AutoSlugField(
         verbose_name=_("Config Choice Category Slug"),
@@ -27,7 +31,9 @@ class ConfigChoiceCategory(MPTTModel):
         slugify=slugify,
     )
     entered_by = models.ForeignKey(User, blank=True, on_delete=models.CASCADE)
-    parent = TreeForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="children")
+    parent = TreeForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="children"
+    )
     is_active = models.BooleanField(default=True)
 
     class MPTTMeta:
@@ -42,14 +48,21 @@ class ConfigChoiceCategory(MPTTModel):
 
 
 class ConfigChoice(CoreModel):
-    name = models.CharField(_("Config Choice Name"), help_text=_("Required and Unique"), max_length=255, unique=True)
+    name = models.CharField(
+        _("Config Choice Name"),
+        help_text=_("Required and Unique"),
+        max_length=255,
+        unique=True,
+    )
     description = models.TextField()
     slug = AutoSlugField(
         verbose_name=_("Config Choice Slug"),
         populate_from="name",
         slugify=slugify,
     )
-    config_choice_category = models.ForeignKey(ConfigChoiceCategory, on_delete=models.CASCADE)
+    config_choice_category = models.ForeignKey(
+        ConfigChoiceCategory, on_delete=models.CASCADE
+    )
     entered_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     class Meta:
@@ -67,8 +80,7 @@ class Address(models.Model):
     state = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=100)
     country = models.CharField(max_length=50)
-    lat = models.DecimalField(max_digits=10, decimal_places=6)
-    lng = models.DecimalField(max_digits=10, decimal_places=6)
+    location = models.PointField(null=True)
 
     def __str__(self):
         return f"{self.street_1}, {self.city}, {self.state}, {self.country}"

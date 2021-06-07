@@ -82,7 +82,9 @@ class HotelSpecificationValue(models.Model):
 
 
 class HotelImage(CoreModel):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="hotel_image")
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, related_name="hotel_image"
+    )
     image_urls = models.URLField(
         _("Hotel Image URLs"),
         help_text=_("Images Urls"),
@@ -102,7 +104,9 @@ class HotelImage(CoreModel):
 
 
 class HotelAddress(models.Model):
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name="hotel_addres")
+    hotel = models.ForeignKey(
+        Hotel, on_delete=models.CASCADE, related_name="hotel_address"
+    )
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
 
     def __str__(self):
