@@ -36,11 +36,17 @@ PROJECT_APPS = [
     "hotels.apps.HotelsConfig",
 ]
 
-THIRD_PARTY_APPS = ["rest_framework", "mptt", "django_extensions"]
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "mptt",
+    "django_extensions",
+    "django_hosts",
+]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
+    "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -48,9 +54,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
+ROOT_HOSTCONF = "config.hosts"
+DEFAULT_HOST = "default"
 
 TEMPLATES = [
     {
@@ -136,4 +145,6 @@ REST_FRAMEWORK = {
 }
 
 if not DEBUG:
-    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = ["rest_framework.renderers.JSONRenderer"]
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = [
+        "rest_framework.renderers.JSONRenderer"
+    ]
