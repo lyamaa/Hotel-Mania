@@ -1,5 +1,5 @@
 from django.db import models
-from commons.models import ConfigChoice, ConfigChoiceCategory
+from commons.models import Address, ConfigChoice, ConfigChoiceCategory
 from rest_framework import serializers
 
 
@@ -27,3 +27,20 @@ class ConfigChoiceSerializer(serializers.ModelSerializer):
             "config_choice_category",
             "entered_by",
         )
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = (
+            "id",
+            "street_1",
+            "street_2",
+            "city",
+            "state",
+            "zip_code",
+            "country",
+            "location",
+        )
+
+        extra_kwargs = {"location": {"read_only": True}}
