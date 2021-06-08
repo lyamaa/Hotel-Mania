@@ -92,7 +92,7 @@ class Company(models.Model):
     description = models.TextField()
     company_identification_number = models.CharField(max_length=100)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    logo = models.ImageField(upload_to="logos", blank=True, null=True)
+    logo = models.URLField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return self.name

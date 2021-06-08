@@ -1,5 +1,13 @@
 from django.db import models
-from commons.models import Address, ConfigChoice, ConfigChoiceCategory
+from django.db.models import fields
+from django.db.models.base import Model
+from commons.models import (
+    Address,
+    CertificationType,
+    Company,
+    ConfigChoice,
+    ConfigChoiceCategory,
+)
 from rest_framework import serializers
 
 
@@ -44,3 +52,23 @@ class AddressSerializer(serializers.ModelSerializer):
         )
 
         extra_kwargs = {"location": {"read_only": True}}
+
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = (
+            "id",
+            "name",
+            "code",
+            "description",
+            "company_identification_number",
+            "address",
+            "logo",
+        )
+
+
+class CertificationTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CertificationType
+        fields = ("id", "certification_name", "system_name", "company")

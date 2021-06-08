@@ -1,12 +1,21 @@
 from django.contrib.gis.geos import Point
+from django.db.models.query import QuerySet
 from geopy.geocoders import Nominatim
 from commons.api.serializers import (
     AddressSerializer,
+    CompanySerializer,
     ConfigChoiceCategorySerializer,
     ConfigChoiceSerializer,
+    CertificationTypeSerializer,
 )
-from rest_framework import viewsets
-from ..models import Address, ConfigChoice, ConfigChoiceCategory
+from rest_framework import serializers, viewsets
+from ..models import (
+    Address,
+    CertificationType,
+    Company,
+    ConfigChoice,
+    ConfigChoiceCategory,
+)
 
 
 geolocator = Nominatim(user_agent="commons")
@@ -63,3 +72,13 @@ class AddressViewsets(viewsets.ModelViewSet):
         pnt = Point(lng, lat)
         print(pnt)
         serializer.save(location=pnt)
+
+
+class CompanyViewSets(viewsets.ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
+
+class CertificationTypeViewsets(viewsets.ModelViewSet):
+    queryset = CertificationType.objects.all()
+    serializer_class = CertificationTypeSerializer
