@@ -82,6 +82,10 @@ class Address(models.Model):
     country = models.CharField(max_length=50)
     location = models.PointField(null=True)
 
+    class Meta:
+        verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
+
     def __str__(self):
         return f"{self.street_1}, {self.city}, {self.state}, {self.country}"
 
@@ -94,6 +98,10 @@ class Company(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     logo = models.URLField(max_length=255, blank=True, null=True)
 
+    class Meta:
+        verbose_name = _("Company")
+        verbose_name_plural = _("Companies")
+
     def __str__(self):
         return self.name
 
@@ -104,6 +112,10 @@ class CertificationType(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     entered_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _("Certification Type")
+        verbose_name_plural = _("Certification Types")
 
     def __str__(self):
         return self.certification_name
