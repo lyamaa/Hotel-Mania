@@ -14,7 +14,6 @@ class Room(CoreModel):
     price = models.DecimalField(
         help_text="RS per night", decimal_places=2, max_digits=10
     )
-
     beds = models.IntegerField(default=1)
     bedrooms = models.IntegerField(default=1)
     bathrooms = models.IntegerField(default=1)
@@ -26,9 +25,17 @@ class Room(CoreModel):
         return self.name
 
 
+class Service_spec(models.Model):
+    title = models.CharField(_("Service Title"), max_length=255)
+    description = models.TextField(_("Service Description"))
+
+    def __str__(self) -> str:
+        return self.title
+
+
 class RoomService(models.Model):
     service_name = models.CharField(_("Service Name"), max_length=255)
-    service_type = models.ForeignKey(ConfigChoice, on_delete=models.DO_NOTHING)
+    service_type = models.ManyToManyField(Service_spec)
     description = models.TextField(
         _("Service Description"), max_length=255, null=True, blank=True
     )
@@ -38,4 +45,4 @@ class RoomService(models.Model):
     room = models.ForeignKey(Room, verbose_name=_("Room"), on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.name
+        return self.service_name
