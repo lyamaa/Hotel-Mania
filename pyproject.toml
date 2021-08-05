@@ -23,6 +23,9 @@ django-hosts = "^4.0"
 django-leaflet = "^0.28.0"
 geopy = "^2.1.0"
 psycopg2-binary = "^2.8.6"
+pytest-django = "^4.4.0"
+nplusone = "^1.0.0"
+graphene-django = "^2.15.0"
 
 [tool.poetry.dev-dependencies]
 

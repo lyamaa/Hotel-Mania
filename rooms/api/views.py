@@ -21,6 +21,7 @@ class RoomServiceListView(ListAPIView):
 
 class CustomRoomCreateAPI(viewsets.ViewSet, mixins.CreateModelMixin):
     """
+    # Custom class to create room and service in a given quantity
     {
         "hotel_id" : 1,
         "room_tag" : 100,

@@ -8,7 +8,7 @@ class User(AbstractUser):
     superhost = models.BooleanField(default=False)
     favs = models.ManyToManyField("rooms.Room", related_name="favs")
 
-    def room_count(self):
-        return self.rooms.count()
+    # def room_count(self):
+    #     return self.rooms.count()
 
-    room_count.short_description = "Room Count"
+    # room_count.short_description = "Room Count"

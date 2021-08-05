@@ -1,4 +1,5 @@
 import os
+import logging
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,8 +42,10 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "mptt",
     "django_extensions",
+    "graphene_django",
     "django_hosts",
     "leaflet",
+    "nplusone.ext.django",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + THIRD_PARTY_APPS
@@ -56,6 +59,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "config.middleware.metric_middleware",
+    "nplusone.ext.django.NPlusOneMiddleware",
     "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
@@ -127,6 +132,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "uploads")
 
@@ -166,4 +172,30 @@ LEAFLET_CONFIG = {
     "DEFAULT_PRECISION": 6,
     "SCALE": "both",
     "ATTRIBUTION_PREFIX": "Made by Lymaa",
+}
+
+# nplusone
+
+NPLUSONE_LOGGER = logging.getLogger("nplusone")
+NPLUSONE_LOG_LEVEL = logging.WARNING
+NPLUSONE_RAISE = False
+
+
+# Logging
+
+LOGGING = {
+    "version": 1,
+    "handlers": {
+        "console": {"class": "logging.StreamHandler"},
+    },
+    "loggers": {
+        "nplusone": {
+            "handlers": ["console"],
+            "level": "WARN",
+        },
+        "debug": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+    },
 }

@@ -8,7 +8,10 @@ from django.utils.translation import gettext_lazy as _
 class Room(CoreModel):
     hotel = models.ForeignKey("hotels.Hotel", on_delete=models.CASCADE)
     room_tag = models.IntegerField(_("Room Tag"), default=100)
-    name = models.CharField(_("Room Name"), max_length=50)
+    name = models.CharField(
+        _("Room Name"),
+        max_length=255,
+    )
     image = models.URLField(max_length=255, null=True)
     capacity = models.IntegerField(default=0)
     price = models.DecimalField(
