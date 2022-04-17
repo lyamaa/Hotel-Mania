@@ -10,8 +10,7 @@ class Query(object):
     room = graphene.Field(RoomType, id=graphene.Int(required=True))
 
     def resolve_rooms(self, info, page=1):
-        if page < 1:
-            page = 1
+        page = max(page, 1)
         page_size = 5
         skip = page_size * (page - 1)
         taking = page_size * page
@@ -21,8 +20,7 @@ class Query(object):
         return room_list
 
     def resolve_total(self, info):
-        total = Room.objects.count()
-        return total
+        return Room.objects.count()
 
     def resolve_room(self, info, id):
         try:

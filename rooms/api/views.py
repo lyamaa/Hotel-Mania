@@ -89,9 +89,7 @@ class CustomRoomCreateAPI(viewsets.ViewSet, mixins.CreateModelMixin):
             raise ValidationError(errors)
 
         hotel = Hotel.objects.get(pk=hotel)
-        last_room = Room.objects.filter(hotel=hotel).last()
-
-        if last_room:
+        if last_room := Room.objects.filter(hotel=hotel).last():
             start_num = room_tag + 1
         else:
             start_num = 100
