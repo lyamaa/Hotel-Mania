@@ -37,8 +37,7 @@ class LoginMutation(graphene.Mutation):
     error = graphene.String()
 
     def mutate(self, info, email, password):
-        user = authenticate(username=email, password=password)
-        if user:
+        if user := authenticate(username=email, password=password):
             token = jwt.encode({"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256")
             return LoginMutation(token=token, pk=user.id)
         else:

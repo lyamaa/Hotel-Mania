@@ -25,7 +25,7 @@ class HotelViewSets(viewsets.ModelViewSet):
     serializer_class = Hotelserializer
 
     def get_permissions(self):
-        if self.action == "list" or self.action == "retrieve":
+        if self.action in ["list", "retrieve"]:
             permission_classes = [AllowAny]
         elif self.action == "create":
             permission_classes = [IsAuthenticated]
@@ -66,7 +66,7 @@ class ImageUpload(APIView):
         for img in images:
             filename = default_storage.save(img.name, img)
             url = default_storage.url(filename)
-            urls = "http://localhost:8000/media" + url
+            urls = f"http://localhost:8000/media{url}"
             arr.append(urls)
 
         return Response(

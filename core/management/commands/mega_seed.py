@@ -36,10 +36,10 @@ class Command(BaseCommand):
 
         rooms = Room.objects.all()
         for room in rooms:
-            for i in range(random.randint(5, 10)):
+            for _ in range(random.randint(5, 10)):
                 Photo.objects.create(
                     caption=room_seeder.faker.sentence(),
                     room=room,
                     file=f"room_photos/{random.randint(1, 31)}.webp",
                 )
-        self.stdout.write(self.style.SUCCESS(f"Everything seeded"))
+        self.stdout.write(self.style.SUCCESS("Everything seeded"))

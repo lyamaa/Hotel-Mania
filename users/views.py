@@ -23,7 +23,7 @@ class UserViewSets(viewsets.ModelViewSet):
     def get_permissions(self):
         if self.action == "list":
             permission_classes = [IsAdminUser]
-        elif self.action == "create" or self.action == "retrieve":
+        elif self.action in ["create", "retrieve"]:
             permission_classes = [AllowAny]
         else:
             permission_classes = [IsSelf]
@@ -37,12 +37,10 @@ class UserViewSets(viewsets.ModelViewSet):
         if not username or not password:
             return Response({"error": "username and password cannot be wmpty"}, status=status.HTTP_400_BAD_REQUEST)
         user = authenticate(username=username, password=password)
-        if user is not None:
-            encoded_jwt = jwt.encode({"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256")
-            return Response(data={"token": encoded_jwt, "id": user.pk})
-
-        else:
+        if user is None:
             return Response({"error": "invalid Credentials provided"}, status=status.HTTP_401_UNAUTHORIZED)
+        encoded_jwt = jwt.encode({"pk": user.pk}, settings.SECRET_KEY, algorithm="HS256")
+        return Response(data={"token": encoded_jwt, "id": user.pk})
 
     @action(detail=True)
     def favs(self, request, pk=None):

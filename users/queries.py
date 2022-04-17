@@ -2,8 +2,7 @@ from .models import User
 
 
 def resolve_users(self, info, page=1):
-    if page < 1:
-        page = 1
+    page = max(page, 1)
     page_size = 5
     skip = page_size * (page - 1)
     taking = page_size * page
